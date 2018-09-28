@@ -1,5 +1,3 @@
-// TESTING
-
 package com.example.fraziered.quiz_using_sqlite;
 
 import android.content.Intent;
