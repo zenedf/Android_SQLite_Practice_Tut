@@ -58,13 +58,14 @@ public class MainActivity extends AppCompatActivity {
         // If all is well up there ^^^^
         intent = new Intent(MainActivity.this, QuizActivity.class);
 
-//        startActivity(intent); // Up until PART 5
+//        startActivity(intent); // This simply starts the activity.
 
         startActivityForResult(intent, REQUEST_CODE_QUIZ); // This gets a result back from the activity it starts.
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_CODE_QUIZ) {
@@ -79,12 +80,14 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void loadHighscore() {
+
         SharedPreferences prefs = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         highscore = prefs.getInt(KEY_HIGHSCORE, 0);
         textViewHighscore.setText("Highscore: " + highscore);
     }
 
     private void updateHighscore(int highscoreNew) {
+
         highscore = highscoreNew;
         textViewHighscore.setText("Highscore: " + highscore);
 
