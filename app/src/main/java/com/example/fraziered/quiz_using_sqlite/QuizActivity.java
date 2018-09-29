@@ -42,26 +42,10 @@ public class QuizActivity extends AppCompatActivity {
 
     private boolean answered;
 
-    // PART 6
-//    private long backPressedTime;
-
-//    static QuizActivity quizActivity; // TESTING
+    private long backPressedTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-//        quizActivity = this; // TESTING
-
-        // Needed for PART 6...maybe
-//        ((GlobalVariableClass) getApplicationContext()).globalQuizActivity = this; // TESTING
-
-//        Toast.makeText(this, "closedOnce: " + ((GlobalVariableClass) getApplicationContext()).closedOnce, Toast.LENGTH_SHORT).show(); // TESTING
-
-        // PART 6...honestly don't know if this does anything. It did at one point.
-        // Without this, clicking the back button on the MainActivity screen will create another instance of QuizActivity...For some reason.
-//        if (((GlobalVariableClass) getApplicationContext()).closedOnce == true) {
-//            finish();
-//        }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
@@ -252,24 +236,18 @@ public class QuizActivity extends AppCompatActivity {
         finish(); // This simply re-opens the current activity. You have to then complete the quiz a second time for this to work properly.
     }
 
-    // PART 6
     @Override
     public void onBackPressed() {
 
-        finish(); // TESTING
+        if (backPressedTime + 2000 > System.currentTimeMillis()) {
+//            finishQuiz(); // This will still save the results you already have.
 
-        // PART 6
-//        if (backPressedTime + 2000 > System.currentTimeMillis()) {
-////            finishQuiz(); // This will still save the results you already have.
-//
-//            ((GlobalVariableClass) getApplicationContext()).closedOnce = true; // TESTING
-//
-//            finish(); // This doesn't save it and simply closes the activity. (Supposed to anyway) // TESTING
-//
-//        } else {
-//            Toast.makeText(this, "Press back again to exit the current quiz!", Toast.LENGTH_SHORT).show();
-//        }
-//
-//        backPressedTime = System.currentTimeMillis();
+            finish(); // This doesn't save it and simply closes the activity.
+
+        } else {
+            Toast.makeText(this, "Press back again to exit the current quiz!", Toast.LENGTH_SHORT).show();
+        }
+
+        backPressedTime = System.currentTimeMillis();
     }
 }

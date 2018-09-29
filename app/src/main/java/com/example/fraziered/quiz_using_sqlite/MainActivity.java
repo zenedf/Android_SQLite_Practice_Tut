@@ -30,18 +30,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // PART 6
-//        textViewHighscore = findViewById(R.id.text_view_highscore);
-//        loadHighscore();
+        textViewHighscore = findViewById(R.id.text_view_highscore);
+        loadHighscore();
 
         Button buttonStartQuiz = findViewById(R.id.button_start_quiz);
 
         buttonStartQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                // PART 6...I think
-//                ((GlobalVariableClass) getApplicationContext()).closedOnce = false; // TESTING
 
                 startQuiz();
             }
@@ -64,11 +60,9 @@ public class MainActivity extends AppCompatActivity {
 
 //        startActivity(intent); // Up until PART 5
 
-        // PART 6
         startActivityForResult(intent, REQUEST_CODE_QUIZ); // This gets a result back from the activity it starts.
     }
 
-    // PART 6
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
