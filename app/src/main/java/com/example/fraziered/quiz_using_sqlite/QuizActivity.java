@@ -97,9 +97,9 @@ public class QuizActivity extends AppCompatActivity {
         textViewScore.setText(text);
 
         if (savedInstanceState == null) {
-            QuizDbHelper dbHelper = new QuizDbHelper(this);
-            questionList = dbHelper.getAllQuestions();
-            questionList = dbHelper.getQuestions(difficulty);
+//            QuizDbHelper dbHelper = new QuizDbHelper(this);
+//            questionList = dbHelper.getAllQuestions();
+//            questionList = dbHelper.getQuestions(difficulty);
             questionCountTotal = questionList.size();
 //        ((GlobalVariableClass) getApplicationContext()).questionCountTotal = questionList.size();
             Collections.shuffle(questionList);
