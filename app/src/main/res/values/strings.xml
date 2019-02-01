@@ -4,10 +4,10 @@
     <string name="text_view_text1">My Practice Quiz</string>
     <string name="start_quiz_text">Start Quiz</string>
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur \nLorem ipsum dolor sit amet, consectetur \nLorem ipsum dolor sit amet, consectetur</string>
-    <string name="highscore_text">Highscore: 0</string>
-    <string name="score_text">Score: 0</string>
-    <string name="question_count_text">Question: 1/x</string>
-    <string name="difficulty_text">Difficulty: ?</string>
+    <string name="highscore_text">Highscore: \</string>
+    <string name="score_text">Score: \</string>
+    <string name="question_count_text">Question: \</string>
+    <string name="difficulty_text">Difficulty: \</string>
     <string name="timer">00:30</string>
     <string name="option_1">Option 1</string>
     <string name="option_2">Option 2</string>
@@ -20,5 +20,4 @@
     <string name="next">Next</string>
     <string name="confirm">Confirm</string>
     <string name="forward_slash">/</string>
-    <string name="space" />
 </resources>
