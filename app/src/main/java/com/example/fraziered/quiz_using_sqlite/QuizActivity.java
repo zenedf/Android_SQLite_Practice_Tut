@@ -34,6 +34,7 @@ public class QuizActivity extends AppCompatActivity {
     private TextView textViewQuestion;
     private TextView textViewScore;
     private TextView textViewQuestionCount;
+    private TextView textViewDifficulty;
     private TextView textViewCountDown;
 
     private RadioGroup radGroup;
@@ -70,6 +71,7 @@ public class QuizActivity extends AppCompatActivity {
         textViewQuestion = findViewById(R.id.text_view_question);
         textViewScore = findViewById(R.id.text_view_score);
         textViewQuestionCount = findViewById(R.id.text_view_question_count);
+        textViewDifficulty = findViewById(R.id.text_view_difficulty);
         textViewCountDown = findViewById(R.id.text_view_countdown);
         radGroup = findViewById(R.id.radio_group);
         radBtn1 = findViewById(R.id.radio_button1);
@@ -80,10 +82,16 @@ public class QuizActivity extends AppCompatActivity {
         textColorDefaultRadioButton = radBtn1.getTextColors();
         textColorDefaultCountDown = textViewCountDown.getTextColors();
 
+        Intent intent = getIntent();
+        String difficulty = intent.getStringExtra(MainActivity.EXTRA_DIFFICULTY);
+
+        String text = getString(R.string.difficulty_text) + difficulty;
+        textViewDifficulty.setText(text);
+
         if (savedInstanceState == null) {
             QuizDbHelper dbHelper = new QuizDbHelper(this);
 //            questionList = dbHelper.getAllQuestions();
-            questionList = dbHelper.getQuestions("Medium");
+            questionList = dbHelper.getQuestions(difficulty);
             questionCountTotal = questionList.size();
 //        ((GlobalVariableClass) getApplicationContext()).questionCountTotal = questionList.size();
             Collections.shuffle(questionList);
@@ -210,10 +218,16 @@ public class QuizActivity extends AppCompatActivity {
             radBtn3.setText(currentQuestion.getOption3());
 
             questionCounter++;
-            textViewQuestionCount.setText("Question: " + questionCounter + "/" + questionCountTotal);
+
+//            String text = getString(R.string.question_count_text) + getString(R.string.space) +
+//                    questionCounter + getString(R.string.forward_slash) + questionCountTotal;
+            String text = getString(R.string.question_count_text) + questionCounter +
+                    getString(R.string.forward_slash) + questionCountTotal;
+            textViewQuestionCount.setText(text);
+
 //            textViewQuestionCount.setText("Question: " + questionCounter + "/" + ((GlobalVariableClass) getApplicationContext()).questionCountTotal);
             answered = false;
-            buttonConfirmNext.setText("Confirm");
+            buttonConfirmNext.setText(getString(R.string.confirm));
 
             timeLeftInMillis = COUNTDOWN_IN_MILLIS;
             startCountDown();
@@ -311,7 +325,11 @@ public class QuizActivity extends AppCompatActivity {
         if (ansNum == currentQuestion.getAnswerNum()) {
             score++;
 //            ((GlobalVariableClass) getApplicationContext()).score++;
-            textViewScore.setText("Score: " + score);
+
+            String text = getString(R.string.score_text) + score;
+            textViewScore.setText(text);
+
+
 //            textViewScore.setText("Score: " + ((GlobalVariableClass) getApplicationContext()).score);
         }
 
@@ -327,23 +345,23 @@ public class QuizActivity extends AppCompatActivity {
         switch (currentQuestion.getAnswerNum()) {
             case 1:
                 radBtn1.setTextColor(Color.BLACK);
-                textViewQuestion.setText("Answer 1 is correct!");
+                textViewQuestion.setText(getString(R.string.ans1_correct));
                 break;
             case 2:
                 radBtn2.setTextColor(Color.BLACK);
-                textViewQuestion.setText("Answer 2 is correct!");
+                textViewQuestion.setText(getString(R.string.ans2_correct));
                 break;
             case 3:
                 radBtn3.setTextColor(Color.BLACK);
-                textViewQuestion.setText("Answer 3 is correct!");
+                textViewQuestion.setText(getString(R.string.ans3_correct));
                 break;
         }
 
 //        if (questionCounter < ((GlobalVariableClass) getApplicationContext()).questionCountTotal) {
         if (questionCounter < questionCountTotal) {
-            buttonConfirmNext.setText("Next");
+            buttonConfirmNext.setText(getString(R.string.next));
         } else {
-            buttonConfirmNext.setText("Finish");
+            buttonConfirmNext.setText(getString(R.string.finish));
         }
     }
 

@@ -14,10 +14,14 @@ import java.util.List;
 public class QuizDbHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "MyPracticeQuiz.db";
-    private static final int DATABASE_VERSION = 1; // Increase this number any time that you make changes to the SQL statement.
+    private static final int DATABASE_VERSION = 1; // Increase this number any time that you make changes to the SQL database statement.
+    //   This will call the onUpgrade() method.
+    //
+    // You could also just uninstall the app from the phone. Then, run the app again.
 
     private SQLiteDatabase db;
 
+    // Apparently this can be package-private. Gonna leave it public for now.
     public QuizDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -57,17 +61,23 @@ public class QuizDbHelper extends SQLiteOpenHelper {
     }
 
     private void fillQuestionsTable() {
-        Question q1 = new Question("Easy: A is correct", "A", "B", "C", 1, Question.DIFFICULTY_EASY);
+        Question q1 = new Question("Easy: A is correct",
+                "A", "B", "C", 1, Question.DIFFICULTY_EASY);
         addQuestion(q1);
-        Question q2 = new Question("Medium: B is correct", "A", "B", "C", 2, Question.DIFFICULTY_MEDIUM);
+        Question q2 = new Question("Medium: B is correct",
+                "A", "B", "C", 2, Question.DIFFICULTY_MEDIUM);
         addQuestion(q2);
-        Question q3 = new Question("Medium: C is correct", "A", "B", "C", 3, Question.DIFFICULTY_MEDIUM);
+        Question q3 = new Question("Medium: C is correct",
+                "A", "B", "C", 3, Question.DIFFICULTY_MEDIUM);
         addQuestion(q3);
-        Question q4 = new Question("Hard: A is correct", "A", "B", "C", 1, Question.DIFFICULTY_HARD);
+        Question q4 = new Question("Hard: A is correct",
+                "A", "B", "C", 1, Question.DIFFICULTY_HARD);
         addQuestion(q4);
-        Question q5 = new Question("Hard: B is correct", "A", "B", "C", 2, Question.DIFFICULTY_HARD);
+        Question q5 = new Question("Hard: B is correct",
+                "A", "B", "C", 2, Question.DIFFICULTY_HARD);
         addQuestion(q5);
-        Question q6 = new Question("Hard: C is correct", "A", "B", "C", 3, Question.DIFFICULTY_HARD);
+        Question q6 = new Question("Hard: C is correct",
+                "A", "B", "C", 3, Question.DIFFICULTY_HARD);
         addQuestion(q6);
 
     }
@@ -104,12 +114,14 @@ public class QuizDbHelper extends SQLiteOpenHelper {
         return questionList;
     }
 
+    // Apparently this can be set to package-private. Gonna leave it public for now.
     public ArrayList<Question> getQuestions(String difficulty) {
         ArrayList<Question> questionList = new ArrayList<>();
         db = getReadableDatabase();
 
         String[] selectionArgs = new String[]{difficulty};
-        Cursor c = db.rawQuery("SELECT * FROM " + QuestionsTable.TABLE_NAME + " WHERE " + QuestionsTable.COLUMN_DIFFICULTY + " = ?", selectionArgs);
+        Cursor c = db.rawQuery("SELECT * FROM " + QuestionsTable.TABLE_NAME +
+                " WHERE " + QuestionsTable.COLUMN_DIFFICULTY + " = ?", selectionArgs);
 
         if (c.moveToFirst()) { // This returns our cursor to the first entry. Returns false if there is no entry.
             do {

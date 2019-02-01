@@ -13,7 +13,6 @@
         android:id="@+id/text_view_score"
         android:layout_width="wrap_content"
         android:layout_height="19dp"
-        android:layout_alignTop="@+id/text_view_countdown"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="false"
@@ -21,10 +20,10 @@
         android:gravity="start"
         android:text="@string/score_text"
         android:textColor="@android:color/black"
-        android:textSize="15sp"
         app:layout_constraintBottom_toTopOf="@+id/text_view_question_count"
         app:layout_constraintStart_toStartOf="@+id/text_view_question_count" />
     <!--android:layout_alignStart="@+id/null"-->
+    <!--android:layout_alignTop="@+id/text_view_countdown"-->
 
     <TextView
         android:id="@+id/text_view_question_count"
@@ -38,11 +37,24 @@
         android:layout_alignParentTop="false"
         android:freezesText="true"
         android:gravity="start"
-        android:text="@string/question_count"
+        android:text="@string/question_count_text"
         android:textColor="@android:color/black"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@+id/radio_group"
+        app:layout_constraintBottom_toTopOf="@+id/text_view_difficulty"
         app:layout_constraintStart_toStartOf="@+id/radio_group" />
+
+    <TextView
+        android:id="@+id/text_view_difficulty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_view_question_count"
+        android:layout_marginBottom="4dp"
+        android:layout_toStartOf="@id/text_view_difficulty"
+        android:layout_toLeftOf="@id/text_view_difficulty"
+        android:freezesText="true"
+        android:text="@string/difficulty_text"
+        android:textColor="@android:color/black"
+        app:layout_constraintBottom_toTopOf="@id/radio_group"
+        app:layout_constraintStart_toStartOf="@id/radio_group" />
 
     <TextView
         android:id="@+id/text_view_countdown"
@@ -50,6 +62,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:freezesText="true"
@@ -57,10 +70,12 @@
         android:text="@string/timer"
         android:textColor="@android:color/black"
         android:textSize="40sp"
-        app:layout_constraintEnd_toEndOf="@+id/text_view_question"
+        app:layout_constraintBottom_toBottomOf="@id/text_view_difficulty"
+        app:layout_constraintEnd_toEndOf="@+id/button_confirm_next"
         app:layout_constraintStart_toStartOf="@+id/text_view_question"
-        app:layout_constraintTop_toTopOf="@+id/text_view_score"
         tools:ignore="UnknownId" />
+    <!--app:layout_constraintEnd_toEndOf="@+id/text_view_question"-->
+    <!--app:layout_constraintTop_toTopOf="@+id/text_view_score"-->
 
     <TextView
         android:id="@+id/text_view_question"
@@ -74,7 +89,6 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:freezesText="true"
@@ -86,8 +100,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/radio_group"
-        app:layout_constraintTop_toTopOf="@+id/radio_group" />
+        app:layout_constraintTop_toBottomOf="@id/text_view_countdown" />
     <!--android:layout_alignEnd="@+id/text_view_countdown"-->
+    <!--app:layout_constraintTop_toTopOf="@+id/radio_group"-->
 
     <RadioGroup
         android:id="@+id/radio_group"
@@ -101,7 +116,7 @@
         android:layout_centerVertical="false"
         android:layout_marginStart="4dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="8dp"
         android:scrollbarAlwaysDrawHorizontalTrack="true"
         app:layout_constraintBottom_toTopOf="@+id/button_confirm_next"
         app:layout_constraintStart_toStartOf="parent">
@@ -111,6 +126,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="24dp"
             android:freezesText="true"
             android:text="@string/option_1"
             android:textSize="20sp" />
@@ -119,6 +135,7 @@
             android:id="@+id/radio_button2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
             android:freezesText="true"
             android:text="@string/option_2"
             android:textSize="20sp" />
@@ -144,7 +161,7 @@
         android:layout_marginBottom="8dp"
         android:background="@color/buttonColor"
         android:freezesText="true"
-        android:text="Confirm"
+        android:text="@string/confirm_label"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
