@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,10 +19,13 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE_QUIZ = 1;
 
+    public static final String EXTRA_DIFFICULTY = "extraDifficulty";
+
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String KEY_HIGHSCORE = "keyHighscore";
 
     private TextView textViewHighscore;
+    private Spinner spinnerDifficulty;
 
     private int highscore;
 
@@ -31,6 +36,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         textViewHighscore = findViewById(R.id.text_view_highscore);
+        spinnerDifficulty = findViewById(R.id.spinner_difficulty);
+
+        String[] difficultyLevels = Question.getAllDifficultyLevels();
+
+        ArrayAdapter<String> adapterDifficulty = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, difficultyLevels);
+        adapterDifficulty.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerDifficulty.setAdapter(adapterDifficulty); // This fills the spinner options with all difficulties available.
+
         loadHighscore();
 
         Button buttonStartQuiz = findViewById(R.id.button_start_quiz);
@@ -46,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void startQuiz() {
 
+        String difficulty = spinnerDifficulty.getSelectedItem().toString();
+
         Intent intent;
 
         // This makes sure the program doesn't crash if there is null data.
@@ -56,10 +72,12 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         // If all is well up there ^^^^
+        // Go ahead and do the thing, but for real this time.
         intent = new Intent(MainActivity.this, QuizActivity.class);
 
-//        startActivity(intent); // This simply starts the activity.
+        intent.putExtra(EXTRA_DIFFICULTY, difficulty);
 
+//        startActivity(intent); // This simply starts the activity.
         startActivityForResult(intent, REQUEST_CODE_QUIZ); // This gets a result back from the activity it starts.
     }
 
@@ -83,13 +101,15 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences prefs = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         highscore = prefs.getInt(KEY_HIGHSCORE, 0);
-        textViewHighscore.setText("Highscore: " + highscore);
+        String text = getString(R.string.highscore_text) + highscore;
+        textViewHighscore.setText(text);
     }
 
     private void updateHighscore(int highscoreNew) {
 
         highscore = highscoreNew;
-        textViewHighscore.setText("Highscore: " + highscore);
+        String text = getString(R.string.highscore_text) + highscore;
+        textViewHighscore.setText(text);
 
         SharedPreferences prefs = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();

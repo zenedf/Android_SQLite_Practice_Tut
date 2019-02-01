@@ -5,8 +5,11 @@ import android.os.Parcelable;
 
 public class Question implements Parcelable {
 
+    // All of these can be package-private apparently.
     public static final String DIFFICULTY_EASY = "Easy";
+    // All of these can be package-private apparently.
     public static final String DIFFICULTY_MEDIUM = "Medium";
+    // All of these can be package-private apparently.
     public static final String DIFFICULTY_HARD = "Hard";
 
     private String question;
@@ -16,10 +19,13 @@ public class Question implements Parcelable {
     private int answerNum;
     private String difficulty;
 
+    // All of these can be package-private apparently.
     public Question() {
     }
 
-    public Question(String question, String option1, String option2, String option3, int answerNum, String difficulty) {
+    // All of these can be package-private apparently.
+    public Question(String question, String option1, String option2, String option3,
+                    int answerNum, String difficulty) {
         this.question = question;
         this.option1 = option1;
         this.option2 = option2;
@@ -27,7 +33,10 @@ public class Question implements Parcelable {
         this.answerNum = answerNum;
         this.difficulty = difficulty;
     }
+    // All of these can be package-private apparently.
 
+
+    // This can be private.
     protected Question(Parcel in) {
         question = in.readString();
         option1 = in.readString();
@@ -64,6 +73,8 @@ public class Question implements Parcelable {
         }
     };
 
+
+    // All of these can be package-private apparently
     public String getQuestion() {
         return question;
     }
@@ -112,6 +123,7 @@ public class Question implements Parcelable {
         this.difficulty = difficulty;
     }
 
+
     public static String[] getAllDifficultyLevels() {
         return new String[]{
                 DIFFICULTY_EASY,
@@ -119,4 +131,5 @@ public class Question implements Parcelable {
                 DIFFICULTY_HARD
         };
     }
+    // All of these can be package-private apparently
 }
