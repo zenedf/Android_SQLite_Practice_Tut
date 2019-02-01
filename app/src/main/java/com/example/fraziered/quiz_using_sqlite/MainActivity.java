@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         String[] difficultyLevels = Question.getAllDifficultyLevels();
 
-        ArrayAdapter<String> adapterDifficulty = new ArrayAdapter<>(this,
+        ArrayAdapter<String> adapterDifficulty = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, difficultyLevels);
         adapterDifficulty.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerDifficulty.setAdapter(adapterDifficulty); // This fills the spinner options with all difficulties available.

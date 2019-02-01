@@ -88,14 +88,21 @@ public class QuizActivity extends AppCompatActivity {
         String text = getString(R.string.difficulty_text) + difficulty;
         textViewDifficulty.setText(text);
 
+        // Consider this resetting the score.
+        score = 0;
+
+        // This works here for now.
+        // Load default score. Eventually I will have a better system....I hope.
+        text = getString(R.string.score_text) + score;
+        textViewScore.setText(text);
+
         if (savedInstanceState == null) {
             QuizDbHelper dbHelper = new QuizDbHelper(this);
-//            questionList = dbHelper.getAllQuestions();
+            questionList = dbHelper.getAllQuestions();
             questionList = dbHelper.getQuestions(difficulty);
             questionCountTotal = questionList.size();
 //        ((GlobalVariableClass) getApplicationContext()).questionCountTotal = questionList.size();
             Collections.shuffle(questionList);
-
             showNextQuestion();
         } else {
             questionList = savedInstanceState.getParcelableArrayList(KEY_QUESTION_LIST);
@@ -117,35 +124,6 @@ public class QuizActivity extends AppCompatActivity {
             }
         }
 
-        // If this is the first time the QuizActivity has loaded:
-        //   show the first question in the list,
-        //   add one to the questionCounter variable
-        //
-        // Else:
-        //   restore what needs to be restored before any method is ran,
-        //   show the question that was previously displayed
-//        if (savedInstanceState == null) {
-//
-//            ((GlobalVariableClass) getApplicationContext()).score = 0;
-//
-//            Collections.shuffle(questionList);
-//            ((GlobalVariableClass) getApplicationContext()).shuffled_list = questionList;
-//
-//            showNextQuestion();
-//        } else {
-//            // Anything before the method will restore before the method runs.
-//            questionCounter = savedInstanceState.getInt("int_question_count"); // Restore the preserved questionCounter
-//            answered = savedInstanceState.getBoolean("answered");
-//            textViewScore.setText(savedInstanceState.getString("score"));
-//
-//            textViewCountDown.setText(savedInstanceState.getString("count_down"));
-//            if ((Long.parseLong(((GlobalVariableClass) getApplicationContext()).txt) * 1000) < 10000) {
-//                textViewCountDown.setTextColor(Color.RED);
-//            }
-//
-//            showSameQuestion();
-//        }
-
         buttonConfirmNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -162,44 +140,6 @@ public class QuizActivity extends AppCompatActivity {
         });
     }
 
-    // Ethan wrote this before he knew that there was a better way.
-    //
-    //     This saves the values before the orientation is changed.
-//    @Override
-//    public void onSaveInstanceState(Bundle outState) {
-//
-//        // Params are Key and Value
-//        outState.putString("question", textViewQuestion.getText().toString());
-//        outState.putString("score", textViewScore.getText().toString());
-//        outState.putString("confirm_button", buttonConfirmNext.getText().toString());
-//
-//        ((GlobalVariableClass) getApplicationContext()).txt = textViewCountDown.getText().toString();
-//        ((GlobalVariableClass) getApplicationContext()).og_txt = ((GlobalVariableClass) getApplicationContext()).txt;
-//        ((GlobalVariableClass) getApplicationContext()).txt = ((GlobalVariableClass) getApplicationContext()).txt.replaceAll(":", ""); // Saves the string text minus the colon in a variable for later conversion.
-//        outState.putString("count_down", ((GlobalVariableClass) getApplicationContext()).og_txt); // Preserves the original string with the colon.
-//
-//        outState.putInt("int_question_count", questionCounter);
-//
-//        outState.putBoolean("answered", answered);
-//
-//        super.onSaveInstanceState(outState);
-//    }
-
-    // Ethan wrote this before he knew that there was a better way.
-    //
-    //     This reverts the values to where it was before the orientation is changed.
-//    @Override
-//    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-//
-//        super.onRestoreInstanceState(savedInstanceState);
-//
-//        textViewQuestion.setText(savedInstanceState.getString("question"));
-//
-//        answered = savedInstanceState.getBoolean("answered");
-//
-//        buttonConfirmNext.setText(savedInstanceState.getString("confirm_button"));
-//    }
-
     private void showNextQuestion() {
 
         radBtn1.setTextColor(textColorDefaultRadioButton);
@@ -207,10 +147,8 @@ public class QuizActivity extends AppCompatActivity {
         radBtn3.setTextColor(textColorDefaultRadioButton);
         radGroup.clearCheck();
 
-//        if (questionCounter < ((GlobalVariableClass) getApplicationContext()).questionCountTotal) {
         if (questionCounter < questionCountTotal) {
             currentQuestion = questionList.get(questionCounter);
-//            currentQuestion = ((GlobalVariableClass) getApplicationContext()).shuffled_list.get(questionCounter);
 
             textViewQuestion.setText(currentQuestion.getQuestion());
             radBtn1.setText(currentQuestion.getOption1());
@@ -219,13 +157,11 @@ public class QuizActivity extends AppCompatActivity {
 
             questionCounter++;
 
-//            String text = getString(R.string.question_count_text) + getString(R.string.space) +
-//                    questionCounter + getString(R.string.forward_slash) + questionCountTotal;
             String text = getString(R.string.question_count_text) + questionCounter +
-                    getString(R.string.forward_slash) + questionCountTotal;
+                    getString(R.string.forward_slash) + questionCountTotal; // It's wanting me to use a variable for the forward slash.
+            //  I call it unnecessary, but whatever.
             textViewQuestionCount.setText(text);
 
-//            textViewQuestionCount.setText("Question: " + questionCounter + "/" + ((GlobalVariableClass) getApplicationContext()).questionCountTotal);
             answered = false;
             buttonConfirmNext.setText(getString(R.string.confirm));
 
@@ -277,41 +213,6 @@ public class QuizActivity extends AppCompatActivity {
         }
     }
 
-    // Ethan wrote this before he knew better
-    //
-//    private void showSameQuestion() {
-//
-//        questionCounter--; // This is needed to display the proper question. 1 off error...
-//
-//        radBtn1.setTextColor(textColorDefaultRadioButton);
-//        radBtn2.setTextColor(textColorDefaultRadioButton);
-//        radBtn3.setTextColor(textColorDefaultRadioButton);
-//        radGroup.clearCheck();
-//
-//        currentQuestion = ((GlobalVariableClass) getApplicationContext()).shuffled_list.get(questionCounter);
-//
-//        textViewQuestion.setText(currentQuestion.getQuestion());
-//        radBtn1.setText(currentQuestion.getOption1());
-//        radBtn2.setText(currentQuestion.getOption2());
-//        radBtn3.setText(currentQuestion.getOption3());
-//
-//        if (answered) {
-//            showSolution();
-//        }
-//
-//        questionCounter++; // Restores the question counter to the proper value.
-//
-//        textViewQuestionCount.setText("Question: " + questionCounter + "/" + ((GlobalVariableClass) getApplicationContext()).questionCountTotal);
-//        buttonConfirmNext.setText("Confirm");
-//
-//        timeLeftInMillis = (Long.parseLong(((GlobalVariableClass) getApplicationContext()).txt)) * 1000;
-//
-//        if (timeLeftInMillis > 0 && answered == false) {
-//            startCountDown();
-//        }
-//
-//        answered = false; // Resets answered variable??? (Doesn't hurt anything, but not sure if necessary.)
-//    }
 
     private void checkAnswer() {
 
@@ -324,13 +225,10 @@ public class QuizActivity extends AppCompatActivity {
 
         if (ansNum == currentQuestion.getAnswerNum()) {
             score++;
-//            ((GlobalVariableClass) getApplicationContext()).score++;
 
             String text = getString(R.string.score_text) + score;
             textViewScore.setText(text);
 
-
-//            textViewScore.setText("Score: " + ((GlobalVariableClass) getApplicationContext()).score);
         }
 
         showSolution();
@@ -357,7 +255,6 @@ public class QuizActivity extends AppCompatActivity {
                 break;
         }
 
-//        if (questionCounter < ((GlobalVariableClass) getApplicationContext()).questionCountTotal) {
         if (questionCounter < questionCountTotal) {
             buttonConfirmNext.setText(getString(R.string.next));
         } else {
@@ -368,7 +265,7 @@ public class QuizActivity extends AppCompatActivity {
     private void finishQuiz() {
 
         Intent resultIntent = new Intent();
-//        resultIntent.putExtra(EXTRA_SCORE, ((GlobalVariableClass) getApplicationContext()).score);
+
         resultIntent.putExtra(EXTRA_SCORE, score);
         setResult(RESULT_OK, resultIntent);
 
@@ -379,7 +276,6 @@ public class QuizActivity extends AppCompatActivity {
     public void onBackPressed() {
 
         if (backPressedTime + 2000 > System.currentTimeMillis()) {
-//            finishQuiz(); // This will still save the results you already have.
 
             finish(); // This doesn't save it and simply closes the activity.
 
